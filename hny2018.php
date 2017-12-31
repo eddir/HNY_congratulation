@@ -318,12 +318,17 @@ function vkapi($method, $args, $dieOnError = true) {
 }
 
 function curl($url) {
-	$curlObject = curl_init($url);
-	curl_setopt($curlObject, CURLOPT_SSL_VERIFYPEER, false);
-	curl_setopt($curlObject, CURLOPT_SSL_VERIFYHOST, false);
-	curl_setopt($curlObject, CURLOPT_RETURNTRANSFER, true);
-	$data = @curl_exec($curlObject);
-	@curl_close($curlObject);
+	$components = explode('?', $url);
+	
+	$ch = curl_init();
+	curl_setopt($ch, CURLOPT_URL, $components[0]);
+	curl_setopt($ch, CURLOPT_POST, 1);
+	curl_setopt($ch, CURLOPT_POSTFIELDS, $components[1]);
+	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+	
+	$data = @curl_exec($ch);
+	@curl_close($ch);
+	
 	if ($data) {
 		return json_decode($data, true);
 	}
