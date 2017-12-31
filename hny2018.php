@@ -265,13 +265,13 @@ foreach ($cities as $city => $users) {
 	$text .= ', ';
 }
 
-$text = mb_substr($text, 0, -2);
+$text = mb_substr($text, 0, -2).' !';
 
 $attachments = '';
-$attachments .= $items['audio'][mt_rand(0, count($items['audio']) - 1)].',';
 for ($i = 0; $i < 3; $i++) {
-	$attachments .= $items['photos'][mt_rand(0, count($items['photos']) - 1)].',';
+   $attachments .= $items['audio'][mt_rand(0, count($items['audio']) - 1)].',';
 }
+$attachments .= $items['photos'][mt_rand(0, count($items['photos']) - 1)].',';
 $attachments = substr($attachments, 0, -1);
 
 var_dump($text, $attachments);
