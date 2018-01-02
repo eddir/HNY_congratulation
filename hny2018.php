@@ -199,6 +199,7 @@ if (isset($argv[1]) && $argv[1] == 'setup') {
 	foreach ($cities as $key => $name) {
 		if ($name['city'] == 'null') {
 			$sql .= "('null', 'null'),";
+			continue;
 		}
 		if ($requests++ >= 50) {
 			echo $key , '/', count($cities), ' cities...', PHP_EOL;
@@ -220,7 +221,8 @@ if (isset($argv[1]) && $argv[1] == 'setup') {
 
 $now = gmdate('G');
 $minutes = gmdate('i');
-$now > 0 ? $gmt = 24 - $now : $gmt = -$now;
+
+$now <= 12 ? $gmt = -$now : $gmt = 24 - $now;
 
 if (abs($minutes - 30) < 3) {
 	$gmt = $gmt.'.5';
